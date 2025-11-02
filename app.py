@@ -109,12 +109,12 @@ if st.button("Predict Segment"):
         'TENURE': [6, 9, 12]
     })
     def fit_scaler_if_needed(scaler, X):
-    X = np.asarray(X, dtype=float)
-    if X.ndim == 1:
-        X = X.reshape(-1, 1)
-    if not hasattr(scaler, "mean_"):
-        scaler.fit(X)
-    return scaler
+        X = np.asarray(X, dtype=float)
+        if X.ndim == 1:
+            X = X.reshape(-1, 1)
+        if not hasattr(scaler, "mean_"):
+            scaler.fit(X)
+        return scaler
     
     scaler.fit(dummy_data)
     scaled_data = scaler.transform(data)
