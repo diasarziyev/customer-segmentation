@@ -8,21 +8,32 @@ from pathlib import Path
 st.title("💳 Customer Segment Predictor")
 
 @st.cache_resource
-def load_model():
-    here = Path(__file__).parent
+def load_model_and_scaler():
+    here = Path.cwd()
     model_path = here / "kmeans.joblib"
-    scaler_path = here / "scaler.joblib"  
+    scaler_path = here / "scaler.joblib" 
 
     if not model_path.exists():
-        st.error(f"Model file not found at {model_path}. Make sure it’s committed to the repo.")
+        st.error(f"Model file not found: {model_path}")
         st.stop()
 
     model = joblib.load(model_path)
-    scaler = joblib.load(scaler_path) if scaler_path.exists() else StandardScaler()
+
+
+    scaler = None
+    if scaler_path.exists():
+        try:
+            s = joblib.load(scaler_path)
+            if hasattr(s, "fit") and hasattr(s, "transform"):
+                scaler = s
+        except Exception:
+            pass
+
+    if scaler is None:
+        scaler = StandardScaler()
+
     return model, scaler
-
-model, scaler = load_model()
-
+    
 segments = {
     0: "💎 Heavy Spenders",
     1: "💰 Cash-Advance Reliants", 
