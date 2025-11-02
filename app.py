@@ -33,7 +33,9 @@ def load_model_and_scaler():
         scaler = StandardScaler()
 
     return model, scaler
-    
+
+model, scaler = load_model_and_scaler()
+
 segments = {
     0: "💎 Heavy Spenders",
     1: "💰 Cash-Advance Reliants", 
