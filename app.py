@@ -6,15 +6,21 @@ from sklearn.preprocessing import StandardScaler
 
 st.title("💳 Customer Segment Predictor")
 
-# Load model and create scaler
 @st.cache_resource
 def load_model():
-    model = joblib.load('/Users/dias/Downloads/kmeans.joblib')
-    scaler = StandardScaler()
+    here = Path(__file__).parent
+    model_path = here / "kmeans.joblib"
+    scaler_path = here / "scaler.joblib"  
+
+    if not model_path.exists():
+        st.error(f"Model file not found at {model_path}. Make sure it’s committed to the repo.")
+        st.stop()
+
+    model = joblib.load(model_path)
+    scaler = joblib.load(scaler_path) if scaler_path.exists() else StandardScaler()
     return model, scaler
 
 model, scaler = load_model()
-
 # Customer segments
 segments = {
     0: "💎 Heavy Spenders",
