@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import joblib
 from sklearn.preprocessing import StandardScaler
+from pathlib import Path
 
 st.title("💳 Customer Segment Predictor")
 
@@ -21,7 +22,7 @@ def load_model():
     return model, scaler
 
 model, scaler = load_model()
-# Customer segments
+
 segments = {
     0: "💎 Heavy Spenders",
     1: "💰 Cash-Advance Reliants", 
